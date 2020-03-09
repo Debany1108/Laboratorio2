@@ -26,3 +26,32 @@
 {
     display: none;
 }
+
+fieldset label
+{
+    display:block;
+   
+}
+
+
+fieldset input
+{
+    display:block;
+    margin-bottom: 5px;
+}
+
+th {
+  text-align: left;
+}
+
+table {
+  border-spacing: 5px;
+}
+
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 15px;
+}

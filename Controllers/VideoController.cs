@@ -13,43 +13,41 @@ namespace MVCLaboratorio.Controllers
     {
         //
         // GET: /Video/
-
+     
         public ActionResult Index()
         {
+            ViewData["Video"] = BaseHelper.ejecutarConsulta("Select*from Video", CommandType.Text);
             return View();
         }
         public ActionResult Create()
         {
-
             return View();
         }
         [HttpPost]
-        public ActionResult Create(int idVideo, string titulo, int repro, string url)
+        public ActionResult Create(int idVideo, string titulo, int reproducciones, string url)
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
-
             parametros.Add(new SqlParameter("@idVideo", idVideo));
-
             parametros.Add(new SqlParameter("@titulo", titulo));
-
-            parametros.Add(new SqlParameter("@repro", repro));
-
+            parametros.Add(new SqlParameter("@reproducciones", reproducciones));
             parametros.Add(new SqlParameter("@url", url));
-
             BaseHelper.ejecutarSentencia("sp_video_insertar", CommandType.StoredProcedure, parametros);
-
-            return View();
+            return RedirectToAction("Index", "Video");
         }
-
        public ActionResult Edit()
         {
-
             return View();
         }
         [HttpPost]
-        public ActionResult Edit(int idVideo)
+        public ActionResult Edit(int idVideo, string titulo, int reproducciones, string url)
         {
-            return View();
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@idVideo", idVideo));
+            parametros.Add(new SqlParameter("@titulo", titulo));
+            parametros.Add(new SqlParameter("@reproducciones", reproducciones));
+            parametros.Add(new SqlParameter("@url", url));
+            BaseHelper.ejecutarSentencia("sp_video_modificar", CommandType.StoredProcedure, parametros);
+            return RedirectToAction("Index", "Video");
         }
         public ActionResult Delete()
         {
@@ -58,7 +56,10 @@ namespace MVCLaboratorio.Controllers
         [HttpPost]
         public ActionResult Delete(int idVideo)
         {
-            return View();
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@idVideo", idVideo));
+            BaseHelper.ejecutarSentencia("sp_video_eliminar", CommandType.StoredProcedure, parametros);
+            return RedirectToAction("Index", "Video");
         }
     }
 }
